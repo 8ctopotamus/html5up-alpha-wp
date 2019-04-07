@@ -136,6 +136,18 @@ add_action( 'wp_enqueue_scripts', 'html5up_alpha_scripts' );
 /**
  * Implement the Custom Header feature.
  */
+function my_body_classes( $classes ) {
+	if ( is_front_page() ) {
+		$classes[] = 'landing';
+	}
+	$classes[] = 'is-preload';
+  return $classes;   
+}
+add_filter( 'body_class','my_body_classes' );
+
+/**
+ * Implement the Custom Header feature.
+ */
 require get_template_directory() . '/inc/custom-header.php';
 
 /**
