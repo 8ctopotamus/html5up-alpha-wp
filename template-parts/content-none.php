@@ -9,12 +9,12 @@
 
 ?>
 
-<section class="no-results not-found">
+<article class="no-results not-found">
 	<header class="page-header">
 		<h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'html5up-alpha' ); ?></h1>
 	</header><!-- .page-header -->
 
-	<div class="page-content">
+	<div class="page-content box">
 		<?php
 		if ( is_home() && current_user_can( 'publish_posts' ) ) :
 
@@ -48,4 +48,4 @@
 		endif;
 		?>
 	</div><!-- .page-content -->
-</section><!-- .no-results -->
+</article><!-- .no-results -->

@@ -133,6 +133,44 @@ function html5up_alpha_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'html5up_alpha_scripts' );
 
+
+/*
+ * Register meta boxes.
+ */
+function h5ua_register_meta_boxes() {
+	add_meta_box(
+		'h5ua-meta',
+		__( 'Subtitle', 'h5ua' ),
+		'h5ua_display_callback',
+		null // all post-types and pages
+	);
+}
+add_action( 'add_meta_boxes', 'h5ua_register_meta_boxes' );
+
+function h5ua_display_callback( $post ) {
+	include 'inc/meta-form.php';
+}
+
+function h5ua_save_meta_box( $post_id ) {
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( $parent_id = wp_is_post_revision( $post_id ) ) {
+		$post_id = $parent_id;
+	}
+	$fields = [
+		'h5ua_subtitle',
+	];
+	foreach ( $fields as $field ) {
+		if ( array_key_exists( $field, $_POST ) ) {
+			update_post_meta( $post_id, $field, sanitize_text_field( $_POST[$field] ) );
+		}
+	}
+}
+add_action( 'save_post', 'h5ua_save_meta_box' );
+
+
+
 /**
  * Implement the Custom Header feature.
  */

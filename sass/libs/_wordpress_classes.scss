@@ -37,7 +37,6 @@
 .comment-navigation,
 .posts-navigation,
 .post-navigation {
-
 	.site-main & {
 		margin: 0 0 1.5em;
 		overflow: hidden;
@@ -83,4 +82,11 @@
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.admin-bar #header, 
+.admin-bar #navButton,
+.admin-bar #navButton,
+.admin-bar #navPanel {
+	top: 32px;
 }

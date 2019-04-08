@@ -5,7 +5,7 @@
 @import 'libs/breakpoints';
 @import 'libs/wordpress_classes';
 @import 'libs/html-grid';
-@import url('font-awesome.min.css');
+@import url('css/font-awesome.min.css');
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic");
 
 /*
@@ -354,6 +354,12 @@
 			position: relative;
 			margin: 0 0 (_size(element-margin) * 0.75) 0;
 			font-style: italic;
+		}
+
+		h1 + p {
+			font-size: 1.25em;
+			margin-top: -1em;
+			line-height: 1.5em;
 		}
 
 		h2 + p {
@@ -1138,7 +1144,7 @@
 		width: 100%;
 		z-index: 10000;
 
-		h1 {
+		h2 {
 			color: inherit;
 			height: inherit;
 			left: 1.25em;
@@ -1147,6 +1153,7 @@
 			padding: 0;
 			position: absolute;
 			top: 0;
+			font-size: 17px;
 
 			a {
 				color: _palette(header, fg-bold);
@@ -1413,11 +1420,11 @@
 	#main {
 		padding: 4em 0;
 
-		> header {
+		> article > header {
 			text-align: center;
 			margin: 0 0 3em 0;
 
-			h2 {
+			h1 {
 				font-size: 2.75em;
 				margin: 0;
 			}

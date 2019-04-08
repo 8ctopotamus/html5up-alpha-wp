@@ -26,7 +26,9 @@
 
 	<!-- Header -->
 	<header id="header" class="<?php is_front_page() ? 'alt' : '' ?>">
-		<a href="<?php echo site_url(); ?>"><h1>Alpha by HTML5 UP</h1></a>
+		<h2>
+			<a href="<?php echo site_url(); ?>"><?php bloginfo( 'name' ); ?></a>
+		</h2>
 		<?php
 			wp_nav_menu( array(
 				'theme_location' => 'menu-1',

@@ -11,12 +11,20 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+		<?php 
+			the_title( '<h1 class="entry-title">', '</h1>' ); 
+			$subtitle = esc_attr( get_post_meta( get_the_ID(), 'h5ua_subtitle', true) );
+			if ($subtitle) {
+				echo '<p>' . $subtitle . '</p>';
+			}		
+		?>
 	</header><!-- .entry-header -->
 
-	<?php html5up_alpha_post_thumbnail(); ?>
+	<div class="entry-content box">
+		<span class="image featured">
+			<?php html5up_alpha_post_thumbnail(); ?>
+		</span>
 
-	<div class="entry-content">
 		<?php
 		the_content();
 
