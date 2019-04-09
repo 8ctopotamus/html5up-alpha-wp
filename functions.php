@@ -111,7 +111,7 @@ function html5up_alpha_widgets_init() {
 		'name'          => esc_html__( 'Sidebar', 'html5up-alpha' ),
 		'id'            => 'sidebar-1',
 		'description'   => esc_html__( 'Add widgets here.', 'html5up-alpha' ),
-		'before_widget' => '<section id="%1$s" class="widget%2$s">',
+		'before_widget' => '<section id="%1$s" class="widget %2$s box">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
@@ -155,10 +155,6 @@ function my_body_classes( $classes ) {
   return $classes;
 }
 add_filter( 'body_class','my_body_classes' );
-
-
-
-
 
 /**
  * Plugin Name: Menu Link Classes (I)
@@ -207,80 +203,10 @@ add_filter( 'nav_menu_link_attributes', function( $atts, $item )
     return $atts;
 }, 10, 2 );
 
-
-
-
-
-
-
-/*
- * Register meta boxes.
+/**
+ * Custom Meta Boxes
  */
-function h5ua_register_meta_boxes() {
-	_h5ua_subtitle_meta_box();
-	_h5ua_landing_meta_box();
-}
-add_action( 'add_meta_boxes', 'h5ua_register_meta_boxes' );
-
-function _h5ua_subtitle_meta_box() {
-	add_meta_box(
-		'h5ua-meta',
-		__( 'Subtitle', 'h5ua' ),
-		'h5ua_meta_display_callback',
-		null, // show on all post-types and pages
-		'normal',
-		'high'
-	);
-}
-
-function _h5ua_landing_meta_box() {
-	global $post;
-	if ( !empty($post) ) {
-		$pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
-		if ( $pageTemplate == 'page-landing.php' ) {
-			add_meta_box(
-				'h5ua-landing-meta',
-				__( 'Call To Action Buttons', 'h5ua' ),
-				'h5ua_landing_meta_display_callback',
-				'page',
-				'normal',
-				'high'
-			);
-		}
-	}
-}
-
-function h5ua_meta_display_callback( $post ) {
-	include 'inc/meta-forms.php';
-}
-
-function h5ua_landing_meta_display_callback( $post ) {
-	include 'inc/meta-forms-landing.php';
-}
-
-function h5ua_save_meta_box( $post_id ) {
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-	if ( $parent_id = wp_is_post_revision( $post_id ) ) {
-		$post_id = $parent_id;
-	}
-	$fields = [
-		'h5ua_subtitle',
-		'h5ua_cta_1_text',
-		'h5ua_cta_1_link',
-		'h5ua_cta_2_text',
-		'h5ua_cta_2_link',
-	];
-	foreach ( $fields as $field ) {
-		if ( array_key_exists( $field, $_POST ) ) {
-			update_post_meta( $post_id, $field, sanitize_text_field( $_POST[$field] ) );
-		}
-	}
-}
-add_action( 'save_post', 'h5ua_save_meta_box' );
-
-
+require get_template_directory() . '/inc/meta-boxes.php';
 
 /**
  * Implement the Custom Header feature.

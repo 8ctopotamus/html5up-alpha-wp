@@ -421,6 +421,7 @@
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
+	input[type="search"],
 	select,
 	textarea {
 		@include vendor('appearance', 'none');
@@ -472,6 +473,7 @@
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
+	input[type="search"],
 	select {
 		height: _size(element-height);
 	}
@@ -1450,6 +1452,11 @@
 	#secondary {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 12px;
+		
+		.box {
+			padding: 1.2em;
+		}
 	}
 
 /* Footer */
@@ -1528,6 +1535,7 @@
 		input[type="text"],
 		input[type="password"],
 		input[type="email"],
+		input[type="search"],
 		select,
 		textarea {
 			color: _palette(accent2, fg-bold);
