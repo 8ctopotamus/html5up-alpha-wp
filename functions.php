@@ -42,9 +42,12 @@ if ( ! function_exists( 'html5up_alpha_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
+		include 'nav_social_walker.php' ;
+
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
 			'menu-1' => esc_html__( 'Primary', 'html5up-alpha' ),
+			'social' => esc_html__( 'social', 'html4up-alpha')			
 		) );
 
 		/*
@@ -108,7 +111,7 @@ function html5up_alpha_widgets_init() {
 		'name'          => esc_html__( 'Sidebar', 'html5up-alpha' ),
 		'id'            => 'sidebar-1',
 		'description'   => esc_html__( 'Add widgets here.', 'html5up-alpha' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'before_widget' => '<section id="%1$s" class="widget%2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
@@ -154,43 +157,6 @@ function my_body_classes( $classes ) {
 add_filter( 'body_class','my_body_classes' );
 
 
-
-/*
- * Register meta boxes.
- */
-function h5ua_register_meta_boxes() {
-	_h5ua_subtitle_meta_box();
-	_h5ua_landing_meta_box();
-}
-add_action( 'add_meta_boxes', 'h5ua_register_meta_boxes' );
-
-function _h5ua_subtitle_meta_box() {
-	add_meta_box(
-		'h5ua-meta',
-		__( 'Subtitle', 'h5ua' ),
-		'h5ua_meta_display_callback',
-		null, // show on all post-types and pages
-		'normal',
-		'high'
-	);
-}
-
-function _h5ua_landing_meta_box() {
-	global $post;
-	if ( !empty($post) ) {
-		$pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
-		if ( $pageTemplate == 'page-landing.php' ) {
-			add_meta_box(
-				'h5ua-landing-meta',
-				__( 'Call To Action Buttons', 'h5ua' ),
-				'h5ua_landing_meta_display_callback',
-				'page',
-				'normal',
-				'high'
-			);
-		}
-	}
-}
 
 
 
@@ -243,6 +209,46 @@ add_filter( 'nav_menu_link_attributes', function( $atts, $item )
 
 
 
+
+
+
+
+/*
+ * Register meta boxes.
+ */
+function h5ua_register_meta_boxes() {
+	_h5ua_subtitle_meta_box();
+	_h5ua_landing_meta_box();
+}
+add_action( 'add_meta_boxes', 'h5ua_register_meta_boxes' );
+
+function _h5ua_subtitle_meta_box() {
+	add_meta_box(
+		'h5ua-meta',
+		__( 'Subtitle', 'h5ua' ),
+		'h5ua_meta_display_callback',
+		null, // show on all post-types and pages
+		'normal',
+		'high'
+	);
+}
+
+function _h5ua_landing_meta_box() {
+	global $post;
+	if ( !empty($post) ) {
+		$pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
+		if ( $pageTemplate == 'page-landing.php' ) {
+			add_meta_box(
+				'h5ua-landing-meta',
+				__( 'Call To Action Buttons', 'h5ua' ),
+				'h5ua_landing_meta_display_callback',
+				'page',
+				'normal',
+				'high'
+			);
+		}
+	}
+}
 
 function h5ua_meta_display_callback( $post ) {
 	include 'inc/meta-forms.php';
