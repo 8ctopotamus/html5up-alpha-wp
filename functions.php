@@ -121,34 +121,84 @@ add_action( 'widgets_init', 'html5up_alpha_widgets_init' );
  */
 function html5up_alpha_scripts() {
 	wp_enqueue_style( 'html5up-alpha-style', get_stylesheet_uri() );
-
 	wp_enqueue_script( 'html5up-alpha-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
-
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-
 	wp_enqueue_script( 'html5up_alpha_js', get_template_directory_uri() . '/js/bundle.js', array(), false, true );
-
 }
 add_action( 'wp_enqueue_scripts', 'html5up_alpha_scripts' );
+
+/**
+ * Enqueue admin scripts and styles.
+ */
+function wpse44753_admin_enqueue() {
+	wp_enqueue_style(
+		'html5up-alpha-admin-style',
+		get_template_directory_uri() . '/css/admin.css',
+	);
+}
+add_action( 'admin_enqueue_scripts', 'wpse44753_admin_enqueue' );
+
+/**
+ * Body Classes
+ */
+function my_body_classes( $classes ) {
+	if ( is_page_template( 'page-landing.php' ) ) {
+		$classes[] = 'landing';
+	}
+	$classes[] = 'is-preload';
+  return $classes;
+}
+add_filter( 'body_class','my_body_classes' );
+
 
 
 /*
  * Register meta boxes.
  */
 function h5ua_register_meta_boxes() {
-	add_meta_box(
-		'h5ua-meta',
-		__( 'Subtitle', 'h5ua' ),
-		'h5ua_display_callback',
-		null // all post-types and pages
-	);
+	_h5ua_subtitle_meta_box();
+	_h5ua_landing_meta_box();
 }
 add_action( 'add_meta_boxes', 'h5ua_register_meta_boxes' );
 
-function h5ua_display_callback( $post ) {
-	include 'inc/meta-form.php';
+
+function _h5ua_subtitle_meta_box() {
+	// generic
+	add_meta_box(
+		'h5ua-meta',
+		__( 'Subtitle', 'h5ua' ),
+		'h5ua_meta_display_callback',
+		null, // all post-types and pages
+		'normal',
+		'high'
+	);
+}
+
+function h5ua_meta_display_callback( $post ) {
+	include 'inc/meta-forms.php';
+}
+
+function _h5ua_landing_meta_box() {
+	global $post;
+	if ( !empty($post) ) {
+		$pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
+		if ( $pageTemplate == 'page-landing.php' ) {
+			add_meta_box(
+				'h5ua-landing-meta',
+				__( 'Call To Action Buttons', 'h5ua' ),
+				'h5ua_landing_meta_display_callback',
+				'page',
+				'normal',
+				'high'
+			);
+		}
+	}
+}
+
+function h5ua_landing_meta_display_callback( $post ) {
+	include 'inc/meta-forms-landing.php';
 }
 
 function h5ua_save_meta_box( $post_id ) {
@@ -160,6 +210,10 @@ function h5ua_save_meta_box( $post_id ) {
 	}
 	$fields = [
 		'h5ua_subtitle',
+		'h5ua_cta_1_text',
+		'h5ua_cta_1_link',
+		'h5ua_cta_2_text',
+		'h5ua_cta_2_link',
 	];
 	foreach ( $fields as $field ) {
 		if ( array_key_exists( $field, $_POST ) ) {
@@ -170,18 +224,6 @@ function h5ua_save_meta_box( $post_id ) {
 add_action( 'save_post', 'h5ua_save_meta_box' );
 
 
-
-/**
- * Implement the Custom Header feature.
- */
-function my_body_classes( $classes ) {
-	if ( is_front_page() ) {
-		$classes[] = 'landing';
-	}
-	$classes[] = 'is-preload';
-  return $classes;   
-}
-add_filter( 'body_class','my_body_classes' );
 
 /**
  * Implement the Custom Header feature.

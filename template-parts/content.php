@@ -29,9 +29,11 @@
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
-	<?php html5up_alpha_post_thumbnail(); ?>
+	<div class="entry-content box">
+		<div class="image featured">
+			<?php html5up_alpha_post_thumbnail(); ?>
+		</div>
 
-	<div class="entry-content">
 		<?php
 		the_content( sprintf(
 			wp_kses(
@@ -51,9 +53,11 @@
 			'after'  => '</div>',
 		) );
 		?>
-	</div><!-- .entry-content -->
+		
 
-	<footer class="entry-footer">
-		<?php html5up_alpha_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
+		<footer class="entry-footer">
+			<?php html5up_alpha_entry_footer(); ?>
+		</footer><!-- .entry-footer -->
+
+	</div><!-- .entry-content -->
 </article><!-- #post-<?php the_ID(); ?> -->

@@ -25,7 +25,7 @@
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'html5up-alpha' ); ?></a>
 
 	<!-- Header -->
-	<header id="header" class="<?php is_front_page() ? 'alt' : '' ?>">
+	<header id="header" class="<?php echo is_page_template( 'page-landing.php' ) ? 'alt' : '' ?>">
 		<h2>
 			<a href="<?php echo site_url(); ?>"><?php bloginfo( 'name' ); ?></a>
 		</h2>
@@ -37,33 +37,35 @@
 				'container_id' => 'nav'
 			) );
 		?>
-		<!-- button item
-			<ul>
-		<li><a href="#" class="button">Sign Up</a></li>
-		</ul> -->
 	</header>
 
+	<?php 
 	
-	<?php if (is_front_page()): ?>
+		if ( is_page_template( 'page-landing.php' ) ): 
+			$cta_1_text = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_1_text', true) );
+			$cta_1_link = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_1_link', true) );
+			$cta_2_text = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_2_text', true) );
+			$cta_2_link = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_2_link', true) );
+		?>
 		<!-- Banner -->
 		<section id="banner">
 			<?php the_custom_logo(); ?>
-			<?php if ( is_front_page() && is_home() ) : ?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<?php else : ?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-			<?php endif; ?>
+			<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 			<?php 
-				$html5up_alpha_description = get_bloginfo( 'description', 'display' );
-				if ( $html5up_alpha_description || is_customize_preview() ) : ?>
-					<p class="site-description"><?php echo $html5up_alpha_description; /* WPCS: xss ok. */ ?></p>
-			<?php endif; ?>
+				$subtitle = esc_attr( get_post_meta( get_the_ID(), 'h5ua_subtitle', true) );
+				if ($subtitle) {
+					echo '<p>' . $subtitle . '</p>';
+				}
+			?>
 			<ul class="actions special">
-				<li><a href="#" class="button primary">Sign Up</a></li>
-				<li><a href="#" class="button">Learn More</a></li>
+				<?php if ( $cta_1_text || $cta_1_link ): ?>
+					<li><a href="<?php echo $cta_1_link; ?>" class="button primary"><?php echo $cta_1_text; ?></a></li>
+				<?php endif; ?>
+				<?php if ( $cta_2_text || $cta_2_link ): ?>
+					<li><a href="<?php echo $cta_2_link; ?>" class="button"><?php echo $cta_2_text; ?></a></li>
+				<?php endif; ?>
 			</ul>
 		</section>
 	<?php endif; ?>
-	
 
-	<section id="main" class="container">
+	<section id="main-wrap" class="container">

@@ -1363,7 +1363,7 @@
 	#banner {
 		background-attachment:	scroll,							fixed;
 		background-color:		#666;
-		background-image:		url('images/overlay.png'),		url('../../images/banner.jpg');
+		background-image:		url('images/overlay.png'), url('images/banner-city.jpg');
 		background-position:	top left,						center center;
 		background-repeat:		repeat,							no-repeat;
 		background-size:		auto,							cover;
@@ -1375,11 +1375,11 @@
 			margin-bottom: 0;
 		}
 
-		h2, h3, h4, h5, h6 {
+		h1, h2, h3, h4, h5, h6 {
 			color: #fff;
 		}
 
-		h2 {
+		h1 {
 			font-size: 3.5em;
 			line-height: 1em;
 			margin: 0 0 0.5em 0;

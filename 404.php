@@ -13,12 +13,12 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
-			<section class="error-404 not-found">
+			<article class="error-404 not-found">
 				<header class="page-header">
 					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'html5up-alpha' ); ?></h1>
 				</header><!-- .page-header -->
 
-				<div class="page-content">
+				<div class="page-content box">
 					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'html5up-alpha' ); ?></p>
 
 					<?php
@@ -51,7 +51,7 @@ get_header();
 					?>
 
 				</div><!-- .page-content -->
-			</section><!-- .error-404 -->
+			</article><!-- .error-404 -->
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
