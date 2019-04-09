@@ -125,20 +125,21 @@ function html5up_alpha_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-	wp_enqueue_script( 'html5up_alpha_js', get_template_directory_uri() . '/js/bundle.js', array(), false, true );
+	wp_enqueue_script( 'html5up_alpha_js', get_template_directory_uri() . '/js/bundle.js', array('jquery'), false, true );
 }
 add_action( 'wp_enqueue_scripts', 'html5up_alpha_scripts' );
 
 /**
  * Enqueue admin scripts and styles.
  */
-function wpse44753_admin_enqueue() {
+function h5ua_admin_enqueue() {
 	wp_enqueue_style(
 		'html5up-alpha-admin-style',
 		get_template_directory_uri() . '/css/admin.css',
 	);
 }
-add_action( 'admin_enqueue_scripts', 'wpse44753_admin_enqueue' );
+add_action( 'admin_enqueue_scripts', 'h5ua_admin_enqueue' );
+
 
 /**
  * Body Classes
@@ -163,21 +164,15 @@ function h5ua_register_meta_boxes() {
 }
 add_action( 'add_meta_boxes', 'h5ua_register_meta_boxes' );
 
-
 function _h5ua_subtitle_meta_box() {
-	// generic
 	add_meta_box(
 		'h5ua-meta',
 		__( 'Subtitle', 'h5ua' ),
 		'h5ua_meta_display_callback',
-		null, // all post-types and pages
+		null, // show on all post-types and pages
 		'normal',
 		'high'
 	);
-}
-
-function h5ua_meta_display_callback( $post ) {
-	include 'inc/meta-forms.php';
 }
 
 function _h5ua_landing_meta_box() {
@@ -195,6 +190,62 @@ function _h5ua_landing_meta_box() {
 			);
 		}
 	}
+}
+
+
+
+/**
+ * Plugin Name: Menu Link Classes (I)
+ * Description: Target menu link classes with the "a-class-" class prefix.
+ * Author:      Birgir Erlendsson (birgire)
+ * Plugin URI:  http://wordpress.stackexchange.com/a/190844/26350
+ * Version:     0.0.1
+ */
+
+/**
+ * Remove menu classes with the "a-class-" prefix
+ */
+add_filter( 'nav_menu_css_class', function( $classes )
+{
+    return array_filter( 
+        $classes, 
+        function( $val )
+        {
+            return 'a-class-' !== substr( $val, 0, strlen( 'a-class-' ) );
+        } 
+    );
+} );
+
+/**
+ * Add only "a-class-" prefixed classes to the menu link attribute
+ */
+add_filter( 'nav_menu_link_attributes', function( $atts, $item )
+{
+    if( isset( $item->classes ) )
+    {
+        $atts['class'] = str_replace( 
+            'a-class-',
+            '',
+            join( 
+                ' ', 
+                array_filter(
+                    $item->classes, 
+                    function( $val )
+                    {
+                        return 'a-class-' === substr( $val, 0, strlen( 'a-class-' ) );
+                    } 
+                ) 
+            )
+        );
+    }
+    return $atts;
+}, 10, 2 );
+
+
+
+
+function h5ua_meta_display_callback( $post ) {
+	include 'inc/meta-forms.php';
 }
 
 function h5ua_landing_meta_display_callback( $post ) {

@@ -1446,6 +1446,12 @@
 		}
 	}
 
+/* Aside */
+	#secondary {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
 /* Footer */
 
 	#footer {

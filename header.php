@@ -32,7 +32,7 @@
 		<?php
 			wp_nav_menu( array(
 				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
+				'menu_id'        => 'menu-1',
 				'container' => 'nav',
 				'container_id' => 'nav'
 			) );
@@ -40,7 +40,6 @@
 	</header>
 
 	<?php 
-	
 		if ( is_page_template( 'page-landing.php' ) ): 
 			$cta_1_text = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_1_text', true) );
 			$cta_1_link = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_1_link', true) );
