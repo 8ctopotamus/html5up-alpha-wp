@@ -7,13 +7,24 @@
  * @package html5up-alpha
  */
 
+	$boxTitle = esc_attr( get_post_meta( get_the_ID(), 'h5ua_main_box_title', true) );
+	$boxContent = esc_attr( get_post_meta( get_the_ID(), 'h5ua_main_box_content', true) );
+	$boxImageUrl = esc_attr( get_post_meta( get_the_ID(), 'h5ua_main_box_image_url', true) );
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<div class="entry-content box">
-		<span class="image featured">
-			<?php html5up_alpha_post_thumbnail(); ?>
-		</span>
+	<div class="entry-content">
+		<div class="box">
+			<header class="major">
+				<h2><?php echo $boxTitle; ?></h2>
+				<p><?php echo $boxContent; ?></p>
+			</header>
+			<?php if ( $boxImageUrl ): ?>
+				<span class="image featured">
+					<img src="<?php echo $boxImageUrl; ?>" alt="<?php echo $boxTitle; ?>">
+				</span>
+			<?php endif; ?>
+		</div>
 
 		<?php
 		the_content();

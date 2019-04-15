@@ -40,14 +40,16 @@
 	</header>
 
 	<?php 
+		// Hero section for landing pages
 		if ( is_page_template( 'page-landing.php' ) ): 
 			$cta_1_text = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_1_text', true) );
 			$cta_1_link = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_1_link', true) );
 			$cta_2_text = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_2_text', true) );
 			$cta_2_link = esc_attr( get_post_meta( get_the_ID(), 'h5ua_cta_2_link', true) );
+
 		?>
-		<!-- Banner -->
-		<section id="banner">
+		<!-- Banner -->		
+		<section id="banner" style="background-image: url(<?php echo get_template_directory_uri() . '/images/overlay.png'; ?>), url(<?php echo get_the_post_thumbnail_url(); ?>);">
 			<?php the_custom_logo(); ?>
 			<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 			<?php 

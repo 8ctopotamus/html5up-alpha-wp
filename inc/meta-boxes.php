@@ -27,7 +27,7 @@ function _h5ua_landing_meta_box() {
 		if ( $pageTemplate == 'page-landing.php' ) {
 			add_meta_box(
 				'h5ua-landing-meta',
-				__( 'Call To Action Buttons', 'h5ua' ),
+				__( 'Landing Page Fields', 'h5ua' ),
 				'h5ua_landing_meta_display_callback',
 				'page',
 				'normal',
@@ -58,10 +58,15 @@ function h5ua_save_meta_box( $post_id ) {
 		'h5ua_cta_1_link',
 		'h5ua_cta_2_text',
 		'h5ua_cta_2_link',
+		'h5ua_main_box_title',
+		'h5ua_main_box_content',
+		'h5ua_main_box_image_url',
 	];
 	foreach ( $fields as $field ) {
 		if ( array_key_exists( $field, $_POST ) ) {
-			update_post_meta( $post_id, $field, sanitize_text_field( $_POST[$field] ) );
+			$data = htmlspecialchars( $_POST[$field] );
+			$data = sanitize_text_field( $_POST[$field] );
+			update_post_meta( $post_id, $field, $data);
 		}
 	}
 }

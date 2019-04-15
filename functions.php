@@ -140,6 +140,11 @@ function h5ua_admin_enqueue() {
 		'html5up-alpha-admin-style',
 		get_template_directory_uri() . '/css/admin.css',
 	);
+	
+	wp_enqueue_style('thickbox');
+	wp_enqueue_script('jquery');
+  wp_enqueue_script('media-upload');
+  wp_enqueue_script('thickbox');
 }
 add_action( 'admin_enqueue_scripts', 'h5ua_admin_enqueue' );
 
